@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="FocusManager/FocusManager.vcxproj" Id="430bf8f8-b7aa-4286-888d-a7942254a3d6" />
+</Solution>
