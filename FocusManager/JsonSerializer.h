@@ -1,8 +1,10 @@
 #pragma once
+
 #include <nlohmann/json.hpp>
-#include <fstream>
-#include <filesystem>
 #include <string>
+
+#include "ExtraFunctions.h"
+#include "Error.h"
 
 using json = nlohmann::json;
 
@@ -10,20 +12,17 @@ class JsonSerializer
 {
 public:
 	JsonSerializer() = default;
-	JsonSerializer(const std::wstring& path);
+	JsonSerializer(const std::string& path);
 	~JsonSerializer();
 	JsonSerializer(const JsonSerializer& jsonSerializer) = delete;
 
-	void loadData(const std::wstring& path);
+	void loadData(const std::string& path);
 	void saveData();
 	void clearData();
 	const json& getData() const;
+	void setData(const json& data);
 
 private:
 	json data{};
 	std::filesystem::path path{};
-};
-
-class JsonSerializerException : public std::runtime_error {
-
 };

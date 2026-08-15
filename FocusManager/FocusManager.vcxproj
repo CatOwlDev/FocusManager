@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -139,14 +139,24 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Blocker.cpp" />
+    <ClCompile Include="Error.cpp" />
     <ClCompile Include="FocusManager.cpp" />
     <ClCompile Include="JsonSerializer.cpp" />
+    <ClCompile Include="ExtraFunctions.cpp" />
+    <ClCompile Include="SortingAndView.cpp" />
     <ClCompile Include="Task.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="ToDoList.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Blocker.h" />
+    <ClInclude Include="Error.h" />
+    <ClInclude Include="ExtraFunctions.h" />
     <ClInclude Include="JsonSerializer.h" />
+    <ClInclude Include="SortingAndView.h" />
     <ClInclude Include="Task.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="ToDoList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,41 +1,83 @@
 #include "Task.h"
 
 Task::Task(
-	const std::wstring& name,
-	const std::wstring& pathToDescription,
-	const std::wstring& completionDate,
-	const std::wstring& category,
-	const Status status,
-	const Priority priority
+	const std::string& name,
+	const std::string& pathToDescription,
+	const std::string& completionDate,
+	const std::string& category,
+	Status status,
+	Priority priority
 ) :
 	name{ name },
 	pathToDescription{ pathToDescription },
 	completionDate{ completionDate },
 	category{ category },
 	status{ status },
-	priority{ priority },
-	id{ idCounter } { ++idCounter; }
+	priority{ priority } {}
 
-void Task::setName(const std::wstring& name) { this->name = name; }
-void Task::setPathToDescription(const std::wstring& pathToDescription) { this->pathToDescription = pathToDescription; }
-void Task::setCompletionDate(const std::wstring& completionDate) { this->completionDate = completionDate; }
-void Task::setCategory(const std::wstring& category) { this->category = category; }
-void Task::setStatus(const Status status) { this->status = status; }
-void Task::setPriority(const Priority priority) { this->priority = priority; }
+void Task::setName(const std::string& name) { this->name = name; }
+void Task::setPathToDescription(const std::string& pathToDescription) { this->pathToDescription = pathToDescription; }
+void Task::setCompletionDate(const std::string& completionDate) { this->completionDate = completionDate; }
+void Task::setCategory(const std::string& category) { this->category = category; }
+void Task::setStatus(Status status) { this->status = status; }
+void Task::setPriority(Priority priority) { this->priority = priority; }
+void Task::setId(unsigned int id) { this->id = id; }
 
-std::wstring Task::getName() const { return this->name; }
-std::wstring Task::getPathToDescription() const { return this->pathToDescription; }
-std::wstring Task::getCompletionDate() const { return this->completionDate; }
-std::wstring Task::getCategory() const { return this->category; }
+const std::string& Task::getName() const { return this->name; }
+const std::string& Task::getPathToDescription() const { return this->pathToDescription; }
+const std::string& Task::getCompletionDate() const { return this->completionDate; }
+const std::string& Task::getCategory() const { return this->category; }
 Status Task::getStatus() const { return this->status; }
 Priority Task::getPriority() const { return this->priority; }
 unsigned int Task::getId() const { return this->id; }
 
-void Task::setIdCounter(unsigned int idCounter) {
-	Task::idCounter = idCounter;
+void to_json(json& j, const Task& t) {
+	j = json{
+		{ "Name", t.name },
+		{ "PathToDescription", t.pathToDescription },
+		{ "Category", t.category },
+		{ "CompletionDate", t.completionDate },
+		{ "Priority", t.priority },
+		{ "Status", t.status },
+		{ "Id", t.id }
+	};
 }
-unsigned int Task::getIdCounter() {
-	return Task::idCounter;
+void from_json(const json& j, Task& t) {
+	try {
+		j.at("Name").get_to(t.name);
+		j.at("PathToDescription").get_to(t.pathToDescription);
+		j.at("Category").get_to(t.category);
+		j.at("CompletionDate").get_to(t.completionDate);
+		j.at("Priority").get_to(t.priority);
+		j.at("Status").get_to(t.status);
+		j.at("Id").get_to(t.id);
+	}
+	catch (const json::exception& e) {
+		Error error{
+			getCurrentTime(),
+			"file: Task.cpp, func: from_json",
+			e.what()
+		};
+		writeErrorReport(error);
+	}
 }
 
-unsigned int Task::idCounter{ 0 };
+std::string myTransform::to_string(const Status status) {
+	static const std::array<std::string, 3> str{
+	"Active",
+	"Inactive",
+	"Completed"
+	};
+	
+	return str[static_cast<size_t>(status)];
+}
+std::string myTransform::to_string(const Priority priority) {
+	static const std::array<std::string, 4> str{
+		"Low",
+		"Medium",
+		"High",
+		"Critical"
+	};
+
+	return str[static_cast<size_t>(priority)];
+}

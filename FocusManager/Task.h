@@ -1,5 +1,12 @@
 #pragma once
 #include <string>
+#include <nlohmann/json.hpp>
+#include <array>
+
+#include "Error.h"
+#include "ExtraFunctions.h"
+
+using json = nlohmann::json;
 
 enum class Status : unsigned int {
 	Active,
@@ -16,42 +23,49 @@ enum class Priority : unsigned int {
 class Task
 {
 public:
+	friend void to_json(json& j, const Task& t);
+	friend void from_json(const json& j, Task& t);
 	Task() = default;
 	Task(
-		const std::wstring& name,
-		const std::wstring& pathToDescription,
-		const std::wstring& completionDate,
-		const std::wstring& category,
-		const Status status,
-		const Priority priority
+		const std::string& name,
+		const std::string& pathToDescription,
+		const std::string& completionDate,
+		const std::string& category,
+		Status status,
+		Priority priority
 	);
 	~Task() = default;
 
-	void setName(const std::wstring& name);
-	void setPathToDescription(const std::wstring& pathToDescription);
-	void setCompletionDate(const std::wstring& completionDate);
-	void setCategory(const std::wstring& category);
-	void setStatus(const Status status);
-	void setPriority(const Priority priority);
+	void setName(const std::string& name);
+	void setPathToDescription(const std::string& pathToDescription);
+	void setCompletionDate(const std::string& completionDate);
+	void setCategory(const std::string& category);
+	void setStatus(Status status);
+	void setPriority(Priority priority);
+	void setId(unsigned int id);
 
-	std::wstring getName() const;
-	std::wstring getPathToDescription() const;
-	std::wstring getCompletionDate() const;
-	std::wstring getCategory() const;
+	const std::string& getName() const;
+	const std::string& getPathToDescription() const;
+	const std::string& getCompletionDate() const;
+	const std::string& getCategory() const;
 	Status getStatus() const;
 	Priority getPriority() const;
 	unsigned int getId() const;
 
-	static void setIdCounter(unsigned int idCounter);
-	static unsigned int getIdCounter();
-
 private:
-	std::wstring name{};
-	std::wstring pathToDescription{};
-	std::wstring completionDate{};
-	std::wstring category{};
+	std::string name{};
+	std::string pathToDescription{};
+	std::string completionDate{};
+	std::string category{};
 	Status status{};
 	Priority priority{};
 	unsigned int id{};
-	static unsigned int idCounter;
 };
+
+void to_json(json& j, const Task& t);
+void from_json(const json& j, Task& t);
+
+namespace myTransform {
+	std::string to_string(const Status status);
+	std::string to_string(const Priority status);
+}
