@@ -17,9 +17,9 @@ public:
 		const std::string& why
 	);
 private:
-	std::string when{};
-	std::string where{};
-	std::string why{};
+	std::string mWhen{};
+	std::string mWhere{};
+	std::string mWhy{};
 };
 
 std::ostream& operator<<(std::ostream& out, const Error& e);

@@ -143,7 +143,6 @@
     <ClCompile Include="Error.cpp" />
     <ClCompile Include="FocusManager.cpp" />
     <ClCompile Include="JsonSerializer.cpp" />
-    <ClCompile Include="ExtraFunctions.cpp" />
     <ClCompile Include="SortingAndView.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -152,7 +151,6 @@
   <ItemGroup>
     <ClInclude Include="Blocker.h" />
     <ClInclude Include="Error.h" />
-    <ClInclude Include="ExtraFunctions.h" />
     <ClInclude Include="JsonSerializer.h" />
     <ClInclude Include="SortingAndView.h" />
     <ClInclude Include="Task.h" />

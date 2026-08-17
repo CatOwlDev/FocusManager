@@ -1,47 +1,46 @@
 #include "JsonSerializer.h"
 
 // JsonSerializer
-JsonSerializer::JsonSerializer(const std::string& path) { this->loadData(path); }
-JsonSerializer::~JsonSerializer() { this->saveData(); }
+JsonSerializer::JsonSerializer(const std::string& path) { loadData(path); }
+JsonSerializer::~JsonSerializer() { saveData(); }
 
 void JsonSerializer::loadData(const std::string& path) {
-	this->path = std::filesystem::path{ path };
-	if (!std::filesystem::exists(this->path.parent_path())) {
-		std::filesystem::create_directories(this->path.parent_path());
+	mPath = std::filesystem::path{ path };
+	if (!std::filesystem::exists(mPath.parent_path())) {
+		std::filesystem::create_directories(mPath.parent_path());
 	}
 
-	std::ifstream inFile{ this->path };
+	std::ifstream inFile{ mPath };
 
 	if (!inFile) {
-		std::ofstream outFile{ this->path };
-		this->data = json{};
-		outFile << this->data;
+		std::ofstream outFile{ mPath };
+		mData = json{};
+		outFile << mData;
 		return;
 	}
 
 	try {
-		inFile >> this->data;
+		inFile >> mData;
 	}
 	catch (const json::exception& e) {
-		this->data = json{};
+		mData = json{};
 		Error error{
-			getCurrentTime(),
+			getCurrentTimeToString(),
 			"class: JsonSerializer, func: loadData",
 			e.what()
 		};
 		writeErrorReport(error);
-		return;
 	}
 }
 void JsonSerializer::saveData() {
-	std::ofstream outFile{ this->path };
+	std::ofstream outFile{ mPath };
 
 	if (!outFile) {
 		return;
 	}
 
-	outFile << this->data.dump(4);
+	outFile << mData.dump(4);
 }
-void JsonSerializer::clearData() { this->data.clear(); }
-const json& JsonSerializer::getData() const { return this->data; }
-void JsonSerializer::setData(const json& data) { this->data = data; }
+void JsonSerializer::clearData() { mData.clear(); }
+const json& JsonSerializer::getData() const { return mData; }
+void JsonSerializer::setData(const json& data) { mData = data; }

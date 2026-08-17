@@ -5,14 +5,14 @@ Error::Error(
 	const std::string& where,
 	const std::string& why
 ) : 
-	when{when},
-	where{where},
-	why{why} {}
+	mWhen{ when },
+	mWhere{ where },
+	mWhy{ why } {}
 
 std::ostream& operator<<(std::ostream& out, const Error& e) {
-	out << "Error: { When: " << e.when 
-		<< "; Why: " << e.why 
-		<< "; Where: " << e.where << '\n';
+	out << "Error: { When: " << e.mWhen 
+		<< "; Why: " << e.mWhy 
+		<< "; Where: " << e.mWhere << '\n';
 	return out;
 }
 

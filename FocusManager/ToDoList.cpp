@@ -1,36 +1,34 @@
 #include "ToDoList.h"
 
-ToDoList::ToDoList(const ToDoList& toDoList) { this->tasks = toDoList.tasks; }
-
 void ToDoList::emplaceBack(Task& task) { 
-	task.setId(static_cast<unsigned int>(this->tasks.size()));
-	this->tasks.emplace_back(task); 
+	task.setId(static_cast<unsigned int>(mTasks.size()));
+	mTasks.emplace_back(task); 
 }
 void ToDoList::erase(unsigned int id) {
-	if (id >= this->tasks.size()) return;
+	if (id >= mTasks.size()) return;
 
-	this->tasks.erase(this->tasks.begin() + id);
+	mTasks.erase(mTasks.begin() + id);
 	
-	for (size_t i{ static_cast<size_t>(id) }; i < this->tasks.size(); ++i)
-		this->tasks[i].setId(static_cast<unsigned int>(i));
+	for (size_t i{ static_cast<size_t>(id) }; i < mTasks.size(); ++i)
+		mTasks[i].setId(static_cast<unsigned int>(i));
 } 
 
-size_t ToDoList::getSize() const { return this->tasks.size(); }
-std::vector<Task>::const_iterator ToDoList::cbegin() const { return this->tasks.cbegin(); }
-std::vector<Task>::const_iterator ToDoList::cend() const { return this->tasks.cend(); }
+size_t ToDoList::getSize() const { return mTasks.size(); }
+std::vector<Task>::const_iterator ToDoList::cbegin() const { return mTasks.cbegin(); }
+std::vector<Task>::const_iterator ToDoList::cend() const { return mTasks.cend(); }
 
 void to_json(json& j, const ToDoList& toDoList) {
 	j = json{
-		{ "ToDoList", { {"Tasks", toDoList.tasks} } }
+		{ "ToDoList", { {"Tasks", toDoList.mTasks} } }
 	};
 }
 void from_json(const json& j, ToDoList& toDoList) {
 	try {
-		j.at("Tasks").get_to(toDoList.tasks);
+		j.at("Tasks").get_to(toDoList.mTasks);
 	}
 	catch (const json::exception& e) {
 		Error error{
-			getCurrentTime(),
+			getCurrentTimeToString(),
 			"file: ToDoList.cpp, func: from_json",
 			e.what()
 		};
@@ -47,7 +45,7 @@ ToDoList initToDoList(const JsonSerializer& jsonSerializer) {
 	}
 	catch (const json::exception& e) {
 		Error error{
-			getCurrentTime(),
+			getCurrentTimeToString(),
 			"class: ToDoList, func: initToDoList",
 			e.what()
 		};
@@ -62,5 +60,3 @@ void saveToDoList(JsonSerializer& jsonSerializer, const ToDoList& toDoList) {
 	to_json(j, toDoList);
 	jsonSerializer.setData(j);
 }
-
-// TODO: class Blocker, Timer. Func Sort

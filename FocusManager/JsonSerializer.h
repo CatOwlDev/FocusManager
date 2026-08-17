@@ -3,7 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <string>
 
-#include "ExtraFunctions.h"
+#include "Timer.h"
 #include "Error.h"
 
 using json = nlohmann::json;
@@ -23,6 +23,6 @@ public:
 	void setData(const json& data);
 
 private:
-	json data{};
-	std::filesystem::path path{};
+	json mData{};
+	std::filesystem::path mPath{};
 };

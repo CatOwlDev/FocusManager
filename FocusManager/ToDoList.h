@@ -16,7 +16,7 @@ public:
 
 	ToDoList() = default;
 	~ToDoList() = default;
-	ToDoList(const ToDoList& toDoList);
+	//ToDoList(const ToDoList& toDoList);
 
 	void emplaceBack(Task& task);
 	void erase(unsigned int id);
@@ -26,7 +26,7 @@ public:
 	std::vector<Task>::const_iterator cend() const;
 
 private:
-	std::vector<Task> tasks{};
+	std::vector<Task> mTasks{};
 };
 
 ToDoList initToDoList(const JsonSerializer& data);

@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
-#include <cstdlib>
 
 #include "ToDoList.h"
 #include "JsonSerializer.h"
 #include "SortingAndView.h"
+#include "Timer.h"
+#include "Blocker.h"
 
 constexpr char endl = '\n';
 
@@ -15,17 +16,15 @@ constexpr char endl = '\n';
 int main()
 {
     JsonSerializer jsonSerializer{ "C:\\Users\\Dimo\\AppData\\Roaming\\FocusManager\\test.json" };
-    ToDoList toDoList{ initToDoList(jsonSerializer) };
-    //jsonSerializer.clearData();
-    
-    std::vector<Task> v{ toDoList.cbegin(), toDoList.cend() };
 
-    auto viewS{ View::viewByStatus(v, Status::Inactive) };
-    auto viewP{ View::viewByPriority(v, Priority::High) };
+    Timer timer{ initTimer(jsonSerializer) };
+    timer.setPreviousTime(steady_clock::now()); // ??
+    std::cout << "\033[?25l" << std::flush;
 
-    for (const auto& el : viewS) {
-        std::cout << myTransform::to_string(el.getStatus()) << endl;
+    while (true) {
+        timer.updateTimer();
+        timer.updateState();
     }
 
-    //saveToDoList(jsonSerializer, toDoList);
 }
+// TODO: class Blocker, Timer(вроде как готовый, но в будущем надо будет подправить, так как не знаю, что конкретно понадобиться).

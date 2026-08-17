@@ -4,7 +4,7 @@
 #include <array>
 
 #include "Error.h"
-#include "ExtraFunctions.h"
+#include "Timer.h"
 
 using json = nlohmann::json;
 
@@ -53,13 +53,13 @@ public:
 	unsigned int getId() const;
 
 private:
-	std::string name{};
-	std::string pathToDescription{};
-	std::string completionDate{};
-	std::string category{};
-	Status status{};
-	Priority priority{};
-	unsigned int id{};
+	std::string mName{};
+	std::string mPathToDescription{};
+	std::string mCompletionDate{};
+	std::string mCategory{};
+	Status mStatus{};
+	Priority mPriority{};
+	unsigned int mId{};
 };
 
 void to_json(json& j, const Task& t);
