@@ -2,9 +2,11 @@
 
 #include <nlohmann/json.hpp>
 #include <string>
+#include <filesystem>
 
 #include "Timer.h"
 #include "Error.h"
+#include "Paths.hpp"
 
 using json = nlohmann::json;
 
@@ -12,14 +14,14 @@ class JsonSerializer
 {
 public:
 	JsonSerializer() = default;
-	JsonSerializer(const std::string& path);
+	JsonSerializer(const std::filesystem::path& path);
 	~JsonSerializer();
-	JsonSerializer(const JsonSerializer& jsonSerializer) = delete;
 
-	void loadData(const std::string& path);
+	void loadData(const std::filesystem::path& path);
 	void saveData();
-	void clearData();
+
 	const json& getData() const;
+	
 	void setData(const json& data);
 
 private:

@@ -143,19 +143,27 @@
     <ClCompile Include="Error.cpp" />
     <ClCompile Include="FocusManager.cpp" />
     <ClCompile Include="JsonSerializer.cpp" />
-    <ClCompile Include="SortingAndView.cpp" />
+    <ClCompile Include="main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="MyTransformers.cpp" />
+    <ClCompile Include="Paths.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="ToDoList.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Blocker.h" />
     <ClInclude Include="Error.h" />
+    <ClInclude Include="FocusManager.h" />
     <ClInclude Include="JsonSerializer.h" />
-    <ClInclude Include="SortingAndView.h" />
+    <ClInclude Include="MyTransformers.h" />
+    <ClInclude Include="Paths.hpp" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="ToDoList.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

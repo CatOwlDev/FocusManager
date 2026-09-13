@@ -15,9 +15,8 @@ std::ostream& operator<<(std::ostream& out, const Error& e) {
 		<< "; Where: " << e.mWhere << '\n';
 	return out;
 }
-
 void writeErrorReport(const Error& error) {
-	std::filesystem::path path{ "C:\\Users\\Dimo\\AppData\\Roaming\\FocusManager\\errorReport.txt" };
+	std::filesystem::path path{ paths::getFolderFocusManager() / "errorReport.txt" };
 	std::ofstream fileErrorReport{ path, std::ios::app };
 
 	if (!fileErrorReport) {

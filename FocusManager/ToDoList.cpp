@@ -1,21 +1,15 @@
 #include "ToDoList.h"
 
-void ToDoList::emplaceBack(Task& task) { 
-	task.setId(static_cast<unsigned int>(mTasks.size()));
-	mTasks.emplace_back(task); 
-}
-void ToDoList::erase(unsigned int id) {
-	if (id >= mTasks.size()) return;
+void ToDoList::emplaceBack(const Task& task) { mTasks.emplace_back(task); }
+void ToDoList::erase(int selected) {
+	if (selected < 0 || selected >= static_cast<int>(mTasks.size())) return;
 
-	mTasks.erase(mTasks.begin() + id);
-	
-	for (size_t i{ static_cast<size_t>(id) }; i < mTasks.size(); ++i)
-		mTasks[i].setId(static_cast<unsigned int>(i));
+	mTasks.erase(mTasks.begin() + selected);
 } 
 
 size_t ToDoList::getSize() const { return mTasks.size(); }
-std::vector<Task>::const_iterator ToDoList::cbegin() const { return mTasks.cbegin(); }
-std::vector<Task>::const_iterator ToDoList::cend() const { return mTasks.cend(); }
+const std::vector<Task>& ToDoList::getTasks() const { return mTasks; }
+Task& ToDoList::getTask(int selected) { return mTasks[selected];  }
 
 void to_json(json& j, const ToDoList& toDoList) {
 	j = json{
@@ -24,11 +18,15 @@ void to_json(json& j, const ToDoList& toDoList) {
 }
 void from_json(const json& j, ToDoList& toDoList) {
 	try {
-		j.at("Tasks").get_to(toDoList.mTasks);
+		ToDoList temp{};
+
+		j.at("Tasks").get_to(temp.mTasks);
+
+		toDoList = temp;
 	}
 	catch (const json::exception& e) {
 		Error error{
-			getCurrentTimeToString(),
+			getCurrentDateAndTimeToString(),
 			"file: ToDoList.cpp, func: from_json",
 			e.what()
 		};
@@ -40,17 +38,19 @@ ToDoList initToDoList(const JsonSerializer& jsonSerializer) {
 	ToDoList toDoList{};
 	const json& data{ jsonSerializer.getData() };
 
-	try {
-		data.at("ToDoList").get_to(toDoList);
-	}
-	catch (const json::exception& e) {
-		Error error{
-			getCurrentTimeToString(),
-			"class: ToDoList, func: initToDoList",
-			e.what()
-		};
-		writeErrorReport(error);
-		return ToDoList{};
+	if (!data.empty()) {
+		try {
+			data.at("ToDoList").get_to(toDoList);
+		}
+		catch (const json::exception& e) {
+			Error error{
+				getCurrentDateAndTimeToString(),
+				"file: ToDoList.cpp, func: initToDoList",
+				e.what()
+			};
+			writeErrorReport(error);
+			return ToDoList{};
+		}
 	}
 
 	return toDoList;

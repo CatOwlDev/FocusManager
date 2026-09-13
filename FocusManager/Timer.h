@@ -2,25 +2,21 @@
 
 #include <chrono>
 #include <string>
-#include <iomanip>
-#include <sstream>
-
+#include <string_view>
+#include <format>
 
 #include "JsonSerializer.h"
 #include "Error.h"
+#include "MyTransformers.h"
 
 class JsonSerializer;
 
 using namespace std::chrono;
 using json = nlohmann::json;
-using doubleMinutes = duration<double, std::ratio<60>>;
 
-enum class State : unsigned int {
-	Work,
-	minRelax,
-	maxRelax
-};
-
+constexpr int maxSecondsInMinute{ 60 };
+constexpr int maxSecondsInHour{ 3600 };
+constexpr long long maxNumberOfSecondsUserInputsForValue{ maxNumberOfMinutesUserInputsForValue * maxSecondsInMinute };
 
 class Timer {
 public:
@@ -30,42 +26,55 @@ public:
 	Timer() = default;
 	~Timer() = default;
 
+	void update();
+
 	void updateTimer();
-	bool updateState();
+	void updateState();
 
 	void setState(const State state);
+	void setTimeToWork(const seconds& seconds);
+	void setMinTimeToRelax(const seconds& seconds);
+	void setMaxTimeToRelax(const seconds& seconds);
+	
+	void start();
+	void stop();
+	void reset();
+	void skip();
+	void recordPrevTime();
 
+	State getState() const;
+	seconds getCurrentTime() const;
+	seconds getTimeToWork() const;
+	seconds getMinTimeToRelax() const;
+	seconds getMaxTimeToRelax() const;
+	bool isGo() const;
 
-	State getState();
-	doubleMinutes getCurrentTime();
-	size_t getCounter();
+	seconds showCountdown() const;
 
-	void test();
-	void setPreviousTime(const steady_clock::time_point& previous);
+private:
+	void goToNextState();
 
 private:
 	steady_clock::time_point mPrevious{};
 	steady_clock::time_point mCurrent{};
-	duration<double> mCounter{};
+	duration<double> mCounter{ 0.0 };
 
-	doubleMinutes mTimeToWork{ 25.0 };
-	doubleMinutes mMinTimeToRelax{ 5.0 };
-	doubleMinutes mMaxTimeToRelax{ 15.0 };
+	seconds mTimeToWork{ 25 * maxSecondsInMinute };
+	seconds mMinTimeToRelax{ 5 * maxSecondsInMinute };
+	seconds mMaxTimeToRelax{ 15 * maxSecondsInMinute };
 
-	std::array<doubleMinutes*, 3> mTime{
-		&mTimeToWork,
-		&mMinTimeToRelax,
-		&mMaxTimeToRelax
-	};
-
-	State mState{};
+	State mState{ State::Work };
 	size_t mCycleCounterOfWork{};
+
+	bool mGo{};
 };
 
-std::string getCurrentTimeToString();
+std::string getCurrentDateAndTimeToString();
 
 void to_json(json& j, const Timer& timer);
 void from_json(const json& j, Timer& timer);
 
 Timer initTimer(const JsonSerializer& jsonSerializer);
 void saveTimer(JsonSerializer& jsonSerializer, const Timer& timer);
+
+std::string countdownToASCII(const seconds seconds);
