@@ -102,8 +102,8 @@ ftxui::Component ToDoListUI::component() {
 	ftxui::Component inputShortDescriptionTask{ ftxui::Input({ &mStringInputShortDescriptionTask, "ShortDescription" }) };
 	ftxui::Component inputCompletionDateAndTimeTask{ ftxui::Input({ &mStringInputCompletionDateAndTimeTask, "CompletionDateAndTime" }) };
 	ftxui::Component inputCategoryTask{ ftxui::Input({ &mStringInputCategoryTask, "Category" }) };
-	ftxui::Component inputStatusTask{ ftxui::Input({ &mStringInputStatusTask, "Status" }) };
-	ftxui::Component inputPriorityTask{ ftxui::Input({ &mStringInputPriorityTask, "Priority" }) };
+	ftxui::Component inputStatusTask{ ftxui::Input({ &mStringInputStatusTask, "Status: Active or Inactive or Completed" }) };
+	ftxui::Component inputPriorityTask{ ftxui::Input({ &mStringInputPriorityTask, "Priority: Low or Medium or High or Critical" }) };
 	
 	ftxui::Component containerButtonsForToDoList{
 		ftxui::Container::Horizontal({
