@@ -514,7 +514,7 @@ ftxui::Component BlockerUI::component() {
 	ftxui::Component menu{ ftxui::Menu(
 		ptrList,
 		&mSelected
-	) };
+	) | ftxui::size(ftxui::HEIGHT, ftxui::LESS_THAN, 7)};
 
 	ftxui::Component containerForBlocker{
 		ftxui::Container::Horizontal({
@@ -545,7 +545,7 @@ ftxui::Component BlockerUI::component() {
 					ftxui::vbox({
 						ftxui::text("Proccess name") | ftxui::color(ftxui::Color::GrayDark),
 						ftxui::separator(),
-						menu->Render() | ftxui::color(ftxui::Color::Orange1)
+						menu->Render() | ftxui::xflex | ftxui::color(ftxui::Color::Orange1)
 					}) | ftxui::xflex,
 					ftxui::separator(),
 					ftxui::hbox({

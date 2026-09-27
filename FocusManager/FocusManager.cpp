@@ -29,6 +29,8 @@ void FocusManager::run() {
 		if (!isRun()) screen.Exit();
 
 		loop.RunOnce();
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(frameTimeMilliseconds));
 	}
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <thread>
 
 #include <ftxui/component/loop.hpp>
 #include <ftxui/component/screen_interactive.hpp>
@@ -10,6 +11,9 @@
 #include "Timer.h"
 #include "Blocker.h"
 #include "Paths.hpp"
+
+constexpr int fps{ 20 };
+constexpr int frameTimeMilliseconds{ 1000 / fps };
 
 class FocusManagerUI;
 
