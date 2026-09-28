@@ -152,13 +152,13 @@ ftxui::Component ToDoListUI::component() {
 				render(),
 				ftxui::separator(),
 				ftxui::hbox({
-					btnAdd->Render() | ftxui::color(ftxui::Color::GrayDark),
-					btnDelete->Render() | ftxui::color(ftxui::Color::GrayDark),
-					btnEdit->Render() | ftxui::color(ftxui::Color::GrayDark),
+					btnAdd->Render() | ftxui::color(ftxui::Color::GrayLight),
+					btnDelete->Render() | ftxui::color(ftxui::Color::GrayLight),
+					btnEdit->Render() | ftxui::color(ftxui::Color::GrayLight),
 					ftxui::filler(),
-					btnSetActive->Render() | ftxui::color(ftxui::Color::GrayDark),
-					btnSetInactive->Render() | ftxui::color(ftxui::Color::GrayDark),
-					btnSetCompleted->Render() | ftxui::color(ftxui::Color::GrayDark),
+					btnSetActive->Render() | ftxui::color(ftxui::Color::GrayLight),
+					btnSetInactive->Render() | ftxui::color(ftxui::Color::GrayLight),
+					btnSetCompleted->Render() | ftxui::color(ftxui::Color::GrayLight),
 				}) | ftxui::center | ftxui::xflex
 			}) | ftxui::xflex ) | ftxui::color(ftxui::Color::GrayDark) | ftxui::xflex;
 	}) };
@@ -195,7 +195,7 @@ ftxui::Component ToDoListUI::component() {
 				ftxui::separator(),
 				inputPriorityTask->Render(),
 				ftxui::separator(),
-				btnSave->Render() | ftxui::center
+				btnSave->Render() | ftxui::center | ftxui::color(ftxui::Color::GrayLight)
 				}) | ftxui::xflex
 			) | ftxui::xflex;
 		})
@@ -259,7 +259,7 @@ ftxui::Element ToDoListUI::render() {
 		elements.emplace_back(element);
 	}
 
-	if (elements.empty()) elements.emplace_back(ftxui::text("The list is empty") | ftxui::dim);
+	if (elements.empty()) elements.emplace_back(ftxui::text("The list is empty") | ftxui::dim | ftxui::color(ftxui::Color::GrayLight));
 
 	return ftxui::vbox(std::move(elements));
 }
@@ -420,11 +420,11 @@ ftxui::Component TimerUI::component() {
 				ftxui::vbox({
 					render(),
 					ftxui::hbox({
-						btnStart->Render() | ftxui::color(ftxui::Color::GrayDark),
-						btnStop->Render() | ftxui::color(ftxui::Color::GrayDark),
-						btnReset->Render() | ftxui::color(ftxui::Color::GrayDark),
-						btnSkip->Render() | ftxui::color(ftxui::Color::GrayDark),
-						btnEdit->Render() | ftxui::color(ftxui::Color::GrayDark),
+						btnStart->Render() | ftxui::color(ftxui::Color::GrayLight),
+						btnStop->Render() | ftxui::color(ftxui::Color::GrayLight),
+						btnReset->Render() | ftxui::color(ftxui::Color::GrayLight),
+						btnSkip->Render() | ftxui::color(ftxui::Color::GrayLight),
+						btnEdit->Render() | ftxui::color(ftxui::Color::GrayLight),
 					}) | ftxui::center | ftxui::xflex
 				}) | ftxui::xflex) | ftxui::xflex | ftxui::color(ftxui::Color::GrayDark);
 		}) };
@@ -448,7 +448,7 @@ ftxui::Component TimerUI::component() {
 					ftxui::separator(),
 					inputMaxTimeToRelaxTimer->Render(),
 					ftxui::separator(),
-					btnSave->Render() | ftxui::center
+					btnSave->Render() | ftxui::center | ftxui::color(ftxui::Color::GrayLight)
 				}) | ftxui::xflex
 			) | ftxui::xflex;
 		})
@@ -549,8 +549,8 @@ ftxui::Component BlockerUI::component() {
 					}) | ftxui::xflex,
 					ftxui::separator(),
 					ftxui::hbox({
-						btnAdd->Render(),
-						btnDelete->Render()
+						btnAdd->Render() | ftxui::color(ftxui::Color::GrayLight),
+						btnDelete->Render() | ftxui::color(ftxui::Color::GrayLight)
 					}) | ftxui::center | ftxui::xflex
 				}) | ftxui::xflex
 			) | ftxui::xflex | ftxui::color(ftxui::Color::GrayDark);
@@ -569,7 +569,7 @@ ftxui::Component BlockerUI::component() {
 				ftxui::vbox({
 					inputProcessName->Render(),
 					ftxui::separator(),
-					btnSave->Render() | ftxui::center
+					btnSave->Render() | ftxui::center | ftxui::color(ftxui::Color::GrayLight)
 				}) | ftxui::xflex
 			) | ftxui::xflex;
 		})
@@ -645,8 +645,8 @@ ftxui::Component FocusManagerUI::component() {
 				ftxui::hbox({
 					ftxui::text("[FocusManager]") | ftxui::bold | ftxui::color(ftxui::Color::Orange1),
 					ftxui::filler(),
-					btnExit->Render(),
-					btnHelp->Render()
+					btnExit->Render() | ftxui::color(ftxui::Color::GrayLight),
+					btnHelp->Render() | ftxui::color(ftxui::Color::GrayLight)
 				}),
 				ftxui::separator(),
 				containerMainParts->Render()
