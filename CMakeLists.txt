@@ -5,26 +5,36 @@ project(FocusManager CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Включаем модуль для автоскачивания библиотек из GitHub
 include(FetchContent)
 
 # -----------------------------------------------------------------
-# 1. ПОДКЛЮЧАЕМ NLOHMANN JSON
+# 1. ПОДКЛЮЧАЕМ NLOHMANN JSON (Прямое HTTP-скачивание без Git и кэша)
 # -----------------------------------------------------------------
-FetchContent_Declare(
-    json
-    GIT_REPOSITORY https://github.com
-    GIT_TAG        v3.11.3 # Стабильная версия
-)
-FetchContent_MakeAvailable(json)
+set(JSON_DOWNLOAD_DIR "${CMAKE_BINARY_DIR}/nlohmann")
+file(MAKE_DIRECTORY "${JSON_DOWNLOAD_DIR}")
+
+# Скачиваем один заголовочный файл напрямую с серверов GitHub
+if(NOT EXISTS "${JSON_DOWNLOAD_DIR}/json.hpp")
+    message(STATUS "Downloading nlohmann/json.hpp...")
+    file(DOWNLOAD 
+        "https://githubusercontent.com"
+        "${JSON_DOWNLOAD_DIR}/json.hpp"
+        SHOW_PROGRESS
+        STATUS json_download_status
+    )
+endif()
+
+# Создаем интерфейсную библиотеку для вашего проекта
+add_library(nlohmann_json INTERFACE)
+target_include_directories(nlohmann_json INTERFACE "${CMAKE_BINARY_DIR}")
 
 # -----------------------------------------------------------------
-# 2. ПОДКЛЮЧАЕМ FTXUI (Библиотека для консольного интерфейса)
+# 2. ПОДКЛЮЧАЕМ FTXUI (Через FetchContent)
 # -----------------------------------------------------------------
 FetchContent_Declare(
     ftxui
     GIT_REPOSITORY https://github.com
-    GIT_TAG        v5.0.0 # Стабильная версия
+    GIT_TAG        v5.0.0
 )
 FetchContent_MakeAvailable(ftxui)
 
