@@ -24,10 +24,9 @@ jobs:
 
     # Запускаем сборку проекта через родной MSBuild
     - name: Build Project
-      run: msbuild FocusManager.vcxproj /p:Configuration=Release /p:Platform=x64 /p:CustomLinkerOptions="/p:LinkObjects=true"
+      run: msbuild FocusManager.vcxproj /p:Configuration=Release /p:Platform=x64
 
     # Подготовка файлов к публикации
-     Tar-архивация больше не нужна, собираем стандартными средствами
     - name: Prepare Release Artifacts
       shell: bash
       run: |
