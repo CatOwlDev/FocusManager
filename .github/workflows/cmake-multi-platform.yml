@@ -12,6 +12,19 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    # Очищаем кэш прошлых неудачных сборок
+    - name: Clear CMake Cache
+      run: cmake -E rm -rf build
+
+    # Конфигурация CMake
+    - name: Configure CMake
+      run: >
+        cmake -B build
+        -DCMAKE_CXX_COMPILER=cl
+        -DCMAKE_C_COMPILER=cl
+        -DCMAKE_BUILD_TYPE=Release
+        -S .
+
     # Конфигурация CMake (убрали сложные переменные путей, используем стандартную точку для текущего корня)
     - name: Configure CMake
       run: >
