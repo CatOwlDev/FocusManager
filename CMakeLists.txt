@@ -48,4 +48,9 @@ UI.cpp
 )
 
 # Связываем ваш проект с установленными библиотеками
-target_link_libraries(FocusManager PRIVATE nlohmann_json::nlohmann_json ftxui::screen ftxui::dom ftxui::component)
+target_link_libraries(FocusManager PRIVATE 
+    nlohmann_json 
+    ftxui::screen 
+    ftxui::dom 
+    ftxui::component
+)
