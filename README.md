@@ -25,10 +25,10 @@ A programme for staying focused on tasks
 
 # Requirement
 
-Windows 10/11
-It is recommended that you use Windows Terminal, but you can also use the console
+* Windows 10/11
+* It is recommended that you use Windows Terminal, but you can also use the console
 
 # Download
 
 # License
-[MIT LICENSE](LICENSE)
+[MIT LICENSE](LICENSE.txt)
