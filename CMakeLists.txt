@@ -8,56 +8,51 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(FetchContent)
 
 # -----------------------------------------------------------------
-# 1. ПОДКЛЮЧАЕМ NLOHMANN JSON (Прямое HTTP-скачивание без Git и кэша)
+# 1. ПОДКЛЮЧАЕМ NLOHMANN JSON (Прямое HTTP-скачивание файла)
 # -----------------------------------------------------------------
 set(JSON_DOWNLOAD_DIR "${CMAKE_BINARY_DIR}/nlohmann")
 file(MAKE_DIRECTORY "${JSON_DOWNLOAD_DIR}")
 
-# Скачиваем один заголовочный файл напрямую с серверов GitHub
 if(NOT EXISTS "${JSON_DOWNLOAD_DIR}/json.hpp")
     message(STATUS "Downloading nlohmann/json.hpp...")
     file(DOWNLOAD 
         "https://githubusercontent.com"
         "${JSON_DOWNLOAD_DIR}/json.hpp"
         SHOW_PROGRESS
-        STATUS json_download_status
     )
 endif()
 
-# Создаем интерфейсную библиотеку для вашего проекта
 add_library(nlohmann_json INTERFACE)
 target_include_directories(nlohmann_json INTERFACE "${CMAKE_BINARY_DIR}")
 
 # -----------------------------------------------------------------
-# 2. ПОДКЛЮЧАЕМ FTXUI (Через FetchContent)
+# 2. ПОДКЛЮЧАЕМ FTXUI (HTTP-скачивание ZIP-архива вместо Git Clone)
 # -----------------------------------------------------------------
 FetchContent_Declare(
     ftxui
-    GIT_REPOSITORY https://github.com
-    GIT_TAG        v5.0.0
+    URL      https://github.com
 )
 FetchContent_MakeAvailable(ftxui)
 
 # -----------------------------------------------------------------
 # 3. СБОРКА ВАШЕГО ПРОЕКТА
 # -----------------------------------------------------------------
-# ⚠️ ВНИМАНИЕ: Перечислите здесь ВСЕ ваши .cpp файлы через пробел!
-# Например: main.cpp manager.cpp utils.cpp
+# Все ваши исходные .cpp файлы собраны столбиком
 add_executable(FocusManager 
-main.cpp
-Blocker.cpp
-Error.cpp
-FocusManager.cpp
-JsonSerializer.cpp
-MyTransformers.cpp
-Paths.cpp
-Task.cpp
-Timer.cpp
-ToDoList.cpp
-UI.cpp
+    main.cpp
+    Blocker.cpp
+    Error.cpp
+    FocusManager.cpp
+    JsonSerializer.cpp
+    MyTransformers.cpp
+    Paths.cpp
+    Task.cpp
+    Timer.cpp
+    ToDoList.cpp
+    UI.cpp
 )
 
-# Связываем ваш проект с установленными библиотеками
+# Связываем проект с установленными библиотеками
 target_link_libraries(FocusManager PRIVATE 
     nlohmann_json 
     ftxui::screen 
