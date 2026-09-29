@@ -20,6 +20,7 @@ A programme for staying focused on tasks
 * **All buttons are clickable**
 * **The fields for entering the date and time do not check that the date, time or their order are correct**
 * **Data will only be saved after clicking the [Exit] button**
+* **In Blocker, always enter the programme extension**
   
 </details>
 
