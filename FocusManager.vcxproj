@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://microsoft.com">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
@@ -31,7 +31,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)external;$(ProjectDir)external\FTXUI-5.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\external;.\external\FTXUI-5.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -41,24 +41,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="$(ProjectDir)main.cpp" />
-    <ClCompile Include="$(ProjectDir)Blocker.cpp" />
-    <ClCompile Include="$(ProjectDir)Error.cpp" />
-    <ClCompile Include="$(ProjectDir)FocusManager.cpp" />
-    <ClCompile Include="$(ProjectDir)JsonSerializer.cpp" />
-    <ClCompile Include="$(ProjectDir)MyTransformers.cpp" />
-    <ClCompile Include="$(ProjectDir)Paths.cpp" />
-    <ClCompile Include="$(ProjectDir)Task.cpp" />
-    <ClCompile Include="$(ProjectDir)Timer.cpp" />
-    <ClCompile Include="$(ProjectDir)ToDoList.cpp" />
-    <ClCompile Include="$(ProjectDir)UI.cpp" />
-    <ClCompile Include="$(ProjectDir)external\FTXUI-5.0.0\src\ftxui\screen\screen.cpp" />
-    <ClCompile Include="$(ProjectDir)external\FTXUI-5.0.0\src\ftxui\screen\string.cpp" />
-    <ClCompile Include="$(ProjectDir)external\FTXUI-5.0.0\src\ftxui\screen\box.cpp" />
-    <ClCompile Include="$(ProjectDir)external\FTXUI-5.0.0\src\ftxui\screen\color.cpp" />
-    <ClCompile Include="$(ProjectDir)external\FTXUI-5.0.0\src\ftxui\dom\node.cpp" />
-    <ClCompile Include="$(ProjectDir)external\FTXUI-5.0.0\src\ftxui\component\component.cpp" />
-    <ClCompile Include="$(ProjectDir)external\FTXUI-5.0.0\src\ftxui\component\screen_interactive.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Blocker.cpp" />
+    <ClCompile Include="src\Error.cpp" />
+    <ClCompile Include="src\FocusManager.cpp" />
+    <ClCompile Include="src\JsonSerializer.cpp" />
+    <ClCompile Include="src\MyTransformers.cpp" />
+    <ClCompile Include="src\Paths.cpp" />
+    <ClCompile Include="src\Task.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\ToDoList.cpp" />
+    <ClCompile Include="src\UI.cpp" />
+    <ClCompile Include="external\FTXUI-5.0.0\src\ftxui\screen\screen.cpp" />
+    <ClCompile Include="external\FTXUI-5.0.0\src\ftxui\screen\string.cpp" />
+    <ClCompile Include="external\FTXUI-5.0.0\src\ftxui\screen\box.cpp" />
+    <ClCompile Include="external\FTXUI-5.0.0\src\ftxui\screen\color.cpp" />
+    <ClCompile Include="external\FTXUI-5.0.0\src\ftxui\dom\node.cpp" />
+    <ClCompile Include="external\FTXUI-5.0.0\src\ftxui\component\component.cpp" />
+    <ClCompile Include="external\FTXUI-5.0.0\src\ftxui\component\screen_interactive.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
