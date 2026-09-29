@@ -7,6 +7,12 @@
 
 A programme for staying focused on tasks
 
-## How to use
-## Download
-## License
+# How it works
+  ![focusManagerGIF](gif/focuManager.gif)
+
+  Details:
+    - All buttons are clickable
+    - The fields for entering the date and time do not check that the date, time or their order are correct
+    - Data will only be saved after clicking the [Exit] button
+# Download
+# License
