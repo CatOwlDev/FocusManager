@@ -1,43 +1,50 @@
 cmake_minimum_required(VERSION 3.20)
 project(FocusManager CXX)
 
-# Включаем стандарт C++20
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Убираем предупреждение CMake о временных метках архивов
 if(POLICY CMP0135)
     cmake_policy(SET CMP0135 NEW)
 endif()
 
-include(FetchContent)
+# Создаем единую папку для внешних зависимостей
+set(DEPS_DIR "${CMAKE_BINARY_DIR}/external")
+file(MAKE_DIRECTORY "${DEPS_DIR}")
 
 # -----------------------------------------------------------------
-# 1. ПОДКЛЮЧАЕМ NLOHMANN JSON (HTTP-скачивание файла)
+# 1. ПОДКЛЮЧАЕМ NLOHMANN JSON
 # -----------------------------------------------------------------
-set(JSON_DOWNLOAD_DIR "${CMAKE_BINARY_DIR}/nlohmann")
-file(MAKE_DIRECTORY "${JSON_DOWNLOAD_DIR}")
-
-if(NOT EXISTS "${JSON_DOWNLOAD_DIR}/json.hpp")
+if(NOT EXISTS "${DEPS_DIR}/nlohmann/json.hpp")
     message(STATUS "Downloading nlohmann/json.hpp...")
     file(DOWNLOAD 
         "https://githubusercontent.com"
-        "${JSON_DOWNLOAD_DIR}/json.hpp"
-        SHOW_PROGRESS
+        "${DEPS_DIR}/nlohmann/json.hpp"
     )
 endif()
 
 add_library(nlohmann_json INTERFACE)
-target_include_directories(nlohmann_json INTERFACE "${CMAKE_BINARY_DIR}")
+target_include_directories(nlohmann_json INTERFACE "${DEPS_DIR}")
 
 # -----------------------------------------------------------------
-# 2. ПОДКЛЮЧАЕМ FTXUI (HTTP-скачивание ZIP-архива)
+# 2. ПОДКЛЮЧАЕМ FTXUI (Прямое скачивание архива без FetchContent)
 # -----------------------------------------------------------------
-FetchContent_Declare(
-    ftxui
-    URL      https://github.com
-)
-FetchContent_MakeAvailable(ftxui)
+if(NOT EXISTS "${DEPS_DIR}/ftxui-5.0.0.zip")
+    message(STATUS "Downloading FTXUI source archive...")
+    file(DOWNLOAD 
+        "https://github.com"
+        "${DEPS_DIR}/ftxui-5.0.0.zip"
+    )
+    
+    message(STATUS "Extracting FTXUI...")
+    file(ARCHIVE_EXTRACT 
+        INPUT "${DEPS_DIR}/ftxui-5.0.0.zip"
+        DESTINATION "${DEPS_DIR}"
+    )
+endif()
+
+# Регистрируем распакованную библиотеку внутри проекта
+add_subdirectory("${DEPS_DIR}/FTXUI-5.0.0")
 
 # -----------------------------------------------------------------
 # 3. СБОРКА ВАШЕГО ПРОЕКТА
@@ -56,7 +63,6 @@ add_executable(FocusManager
     UI.cpp
 )
 
-# Связываем проект с установленными библиотеками
 target_link_libraries(FocusManager PRIVATE 
     nlohmann_json 
     ftxui::screen 
