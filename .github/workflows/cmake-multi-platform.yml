@@ -38,7 +38,6 @@ jobs:
         mkdir -p dist
         
         # ⚠️ ВАЖНО: Замените FocusManager.exe на точное имя вашего исполняемого файла!
-        # CMake по умолчанию собирает его в папку build/Release/
         cp "${{ steps.strings.outputs.build-output-dir }}/Release/FocusManager.exe" dist/
         
         # Создаем текстовый файл с инструкцией и официальной ссылкой на vc_redist
@@ -48,12 +47,11 @@ jobs:
         echo "https://aka.ms" >> dist/README_BEFORE_RUN.txt
         echo "==========================================================" >> dist/README_BEFORE_RUN.txt
 
-    # Упаковываем .exe и текстовый файл в один ZIP-архив
+    # Упаковываем .exe и текстовый файл в ZIP стандартным средством Windows (PowerShell)
     - name: Archive Release
-      uses: theakson/tar-archiver@v1.0.3
-      with:
-        src: dist
-        dst: FocusManager-windows-x64.zip
+      shell: powershell
+      run: |
+        Compress-Archive -Path dist\* -DestinationPath FocusManager-windows-x64.zip -Force
 
     # Автоматически загружаем ZIP-архив прямо в созданный вами релиз
     - name: Upload Release Asset
