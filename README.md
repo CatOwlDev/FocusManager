@@ -1,14 +1,18 @@
 # FocusManager
 
 ![Programm version](https://img.shields.io/badge/Version-1.0.0-orange)
-![Version C++](https://img.shields.io/badge/version%20C%2B%2B-20%2B-blue?logoColor=blue)
+![Version C++](https://img.shields.io/badge/version%20C%2B%2B-20%2B-blue)
 ![License](https://img.shields.io/badge/License-MIT-green?logoColor=blue)
-![Windows](https://img.shields.io/badge/Windows-passing-brightgreen?logoColor=blue)
+![Windows](https://img.shields.io/badge/Windows-passing-brightgreen)
 
 A programme for staying focused on tasks
 
 # How it works
-  ![focusManagerGIF](gif/focusManager.gif)
+
+<p align="center">
+<img src="gif/focusManager.gif" width="80%" alt="focusManagerGIF">
+</p>
+
 
 <details>
 <summary><b>Details</b></summary>
@@ -19,5 +23,12 @@ A programme for staying focused on tasks
   
 </details>
 
+# Requirement
+
+Windows 10/11
+It is recommended that you use Windows Terminal, but you can also use the console
+
 # Download
+
 # License
+[MIT LICENSE](LICENSE)
