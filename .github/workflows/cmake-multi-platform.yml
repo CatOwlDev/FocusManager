@@ -12,20 +12,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # Очищаем кэш прошлых неудачных сборок
-    - name: Clear CMake Cache
-      run: cmake -E rm -rf build
+    # Принудительно и надежно стираем старый кэш средствами Windows
+    - name: Clear Old Cache
+      shell: powershell
+      run: |
+        if (Test-Path build) { Remove-Item -Recurse -Force build }
 
     # Конфигурация CMake
-    - name: Configure CMake
-      run: >
-        cmake -B build
-        -DCMAKE_CXX_COMPILER=cl
-        -DCMAKE_C_COMPILER=cl
-        -DCMAKE_BUILD_TYPE=Release
-        -S .
-
-    # Конфигурация CMake (убрали сложные переменные путей, используем стандартную точку для текущего корня)
     - name: Configure CMake
       run: >
         cmake -B build
@@ -43,8 +36,6 @@ jobs:
       shell: bash
       run: |
         mkdir -p dist
-        
-        # ⚠️ ВАЖНО: Замените FocusManager.exe на имя вашего файла, если оно другое!
         cp build/Release/FocusManager.exe dist/
         
         echo "==========================================================" > dist/README_BEFORE_RUN.txt
@@ -53,13 +44,13 @@ jobs:
         echo "https://aka.ms" >> dist/README_BEFORE_RUN.txt
         echo "==========================================================" >> dist/README_BEFORE_RUN.txt
 
-    # Упаковываем .exe и текстовый файл в ZIP стандартным средством Windows
+    # Упаковываем .exe и текстовый файл в ZIP
     - name: Archive Release
       shell: powershell
       run: |
         Compress-Archive -Path dist\* -DestinationPath FocusManager-windows-x64.zip -Force
 
-    # Автоматически загружаем ZIP-архив прямо в созданный вами релиз
+    # Автоматически загружаем ZIP-архив в ваш релиз
     - name: Upload Release Asset
       uses: softprops/action-gh-release@v2
       with:
