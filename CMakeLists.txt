@@ -27,13 +27,16 @@ add_library(nlohmann_json INTERFACE)
 target_include_directories(nlohmann_json INTERFACE "${DEPS_DIR}")
 
 # -----------------------------------------------------------------
-# 2. ПОДКЛЮЧАЕМ FTXUI (Прямое скачивание архива без FetchContent)
+# 2. ПОДКЛЮЧАЕМ FTXUI (Исправленное скачивание с редиректами)
 # -----------------------------------------------------------------
 if(NOT EXISTS "${DEPS_DIR}/ftxui-5.0.0.zip")
     message(STATUS "Downloading FTXUI source archive...")
     file(DOWNLOAD 
         "https://github.com"
         "${DEPS_DIR}/ftxui-5.0.0.zip"
+        STATUS download_status
+        LOG download_log
+        FOLLOW_REDIRECTS # <--- ТОТ САМЫЙ ФЛАГ, КОТОРЫЙ ВСЁ ИСПРАВИТ
     )
     
     message(STATUS "Extracting FTXUI...")
@@ -45,6 +48,7 @@ endif()
 
 # Регистрируем распакованную библиотеку внутри проекта
 add_subdirectory("${DEPS_DIR}/FTXUI-5.0.0")
+
 
 # -----------------------------------------------------------------
 # 3. СБОРКА ВАШЕГО ПРОЕКТА
