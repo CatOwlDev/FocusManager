@@ -2,7 +2,7 @@ name: CMake Build and Release
 
 on:
   release:
-    types: [published] # Скрипт срабатывает автоматически только при создании и публикации Релиза
+    types: [published]
 
 jobs:
   build-windows:
@@ -12,24 +12,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set reusable strings
-      id: strings
-      shell: bash
-      run: |
-        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-
-    # Конфигурация CMake с явным указанием компилятора MSVC (cl)
+    # Конфигурация CMake (убрали сложные переменные путей, используем стандартную точку для текущего корня)
     - name: Configure CMake
       run: >
-        cmake -B ${{ steps.strings.outputs.build-output-dir }}
+        cmake -B build
         -DCMAKE_CXX_COMPILER=cl
         -DCMAKE_C_COMPILER=cl
         -DCMAKE_BUILD_TYPE=Release
-        -S ${{ github.workspace }}
+        -S .
 
     # Сборка финального релиза программы
     - name: Build
-      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+      run: cmake --build build --config Release
 
     # Подготовка файлов и добавление инструкции по Visual C++ Redistributable
     - name: Prepare Release Artifacts
@@ -37,17 +31,16 @@ jobs:
       run: |
         mkdir -p dist
         
-        # ⚠️ ВАЖНО: Замените FocusManager.exe на точное имя вашего исполняемого файла!
-        cp "${{ steps.strings.outputs.build-output-dir }}/Release/FocusManager.exe" dist/
+        # ⚠️ ВАЖНО: Замените FocusManager.exe на имя вашего файла, если оно другое!
+        cp build/Release/FocusManager.exe dist/
         
-        # Создаем текстовый файл с инструкцией и официальной ссылкой на vc_redist
         echo "==========================================================" > dist/README_BEFORE_RUN.txt
         echo "IMPORTANT: If the program does not start or shows a missing DLL error," >> dist/README_BEFORE_RUN.txt
         echo "please download and install Microsoft Visual C++ Redistributable from Microsoft:" >> dist/README_BEFORE_RUN.txt
         echo "https://aka.ms" >> dist/README_BEFORE_RUN.txt
         echo "==========================================================" >> dist/README_BEFORE_RUN.txt
 
-    # Упаковываем .exe и текстовый файл в ZIP стандартным средством Windows (PowerShell)
+    # Упаковываем .exe и текстовый файл в ZIP стандартным средством Windows
     - name: Archive Release
       shell: powershell
       run: |
