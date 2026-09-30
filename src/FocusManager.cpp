@@ -18,16 +18,18 @@ void FocusManager::run() {
 	FocusManagerUI focusManagerUI{ FocusManagerUI(this) };
 	ftxui::Component component{ focusManagerUI.component() };
 	
-	ftxui::ScreenInteractive screen{ ftxui::ScreenInteractive::TerminalOutput() };
+	ftxui::ScreenInteractive screen{ ftxui::ScreenInteractive::Fullscreen() };
 	ftxui::Loop loop{ &screen, component };
 	
 	mRun = true;
+	
 	while (!loop.HasQuitted()) {
 		mTimer.update();
 		mBlocker.blockAllUnimportantProcesses();
 
 		if (!isRun()) screen.Exit();
 
+		screen.RequestAnimationFrame();
 		loop.RunOnce();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(frameTimeMilliseconds));
