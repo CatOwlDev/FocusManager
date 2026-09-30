@@ -1,6 +1,6 @@
 #include "Paths.hpp"
 
-/ AI
+// AI
 std::filesystem::path paths::getRoamingPath() {
     PWSTR path{ nullptr };
 
@@ -20,7 +20,7 @@ std::filesystem::path paths::getRoamingPath() {
     return result;
 }
 
-/ AI
+// AI
 const std::filesystem::path& paths::getFolderFocusManager() {
     static const std::filesystem::path result{
         []() -> std::filesystem::path {
