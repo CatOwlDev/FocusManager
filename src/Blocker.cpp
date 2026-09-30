@@ -47,7 +47,7 @@ HWND Blocker::findMainWindow(DWORD processId) {
 // AI
 DWORD Blocker::findProcessId(const std::string& processName) {
 	std::wstring targetProcessName{ processName.begin(), processName.end() };
-	PROCESSENTRY32 processInfo{};
+	PROCESSENTRY32W processInfo{};
 	processInfo.dwSize = sizeof(processInfo);
 
 	HANDLE processesSnapshot{ CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0) };
@@ -60,7 +60,7 @@ DWORD Blocker::findProcessId(const std::string& processName) {
 				CloseHandle(processesSnapshot);
 				return processInfo.th32ProcessID;
 			}
-		} while (Process32Next(processesSnapshot, &processInfo));
+		} while (Process32NextW(processesSnapshot, &processInfo));
 	}
 
 	CloseHandle(processesSnapshot);
