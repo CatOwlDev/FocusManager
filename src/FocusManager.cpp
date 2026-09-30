@@ -18,7 +18,7 @@ void FocusManager::run() {
 	FocusManagerUI focusManagerUI{ FocusManagerUI(this) };
 	ftxui::Component component{ focusManagerUI.component() };
 	
-	ftxui::App screen{ ftxui::ScreenInteractive::TerminalOutput() };
+	ftxui::ScreenInteractive screen{ ftxui::ScreenInteractive::TerminalOutput() };
 	ftxui::Loop loop{ &screen, component };
 	
 	mRun = true;
