@@ -1,7 +1,7 @@
 #define AppName "FocusManager"
 
 #ifndef AppVersion
-  #define AppVersion "1.0.0.2"
+  #define AppVersion "1.1.0"
 #endif
 
 #define AppPublisher "CatOwlDev"
@@ -46,11 +46,11 @@ Name: "{autodesktop}\FocusManager"; \
 
 [Tasks]
 Name: "desktopicon"; \
-    Description: "Создать ярлык на рабочем столе"; \
-    GroupDescription: "Дополнительные ярлыки:"; \
+    Description: "Create a desktop shortcut"; \
+    GroupDescription: "Additional shortcuts:"; \
     Flags: unchecked
 
 [Run]
 Filename: "{app}\{#AppExeName}"; \
-    Description: "Запустить FocusManager"; \
+    Description: "Launch FocusManager"; \
     Flags: nowait postinstall skipifsilent
