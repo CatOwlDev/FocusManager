@@ -48,15 +48,11 @@ The application is still evolving. Some features and workflows may be improved o
 
 Here are some screenshots of FocusManager in action.
 
-<!-- Add a screenshot of the main application window here. -->
-
 ### Main Window
 
 ![FocusManager Main Window](docs/images/main-window.png)
 
 *The main interface of FocusManager.*
-
-<!-- Add a screenshot showing task management here. -->
 
 ### Task Management
 
@@ -64,15 +60,11 @@ Here are some screenshots of FocusManager in action.
 
 *An overview of the task management interface.*
 
-<!-- Add a screenshot showing the Blocker feature here. -->
-
 ### Blocker
 
 ![FocusManager Blocker](docs/images/blocker.png)
 
 *The Blocker interface.*
-
-<!-- Add a screenshot showing the timer here. -->
 
 ### Focus Timer
 
